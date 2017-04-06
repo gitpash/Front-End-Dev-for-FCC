@@ -1,0 +1,91 @@
+body {
+ 
+  font-family: monospace;;
+/*   margin: 0; */
+  font-size: 1.5rem;
+  background-image: linear-gradient(to top, #dbdcd7 0%, #dddcd7 24%, #e2c9cc 30%, #e7627d 46%, #b8235a 59%, #801357 71%, #3d1635 84%, #1c1a27 100%);
+}
+img {
+  width: 100%;
+}
+mark {
+  background-color: rgba(89, 105, 159, 0.73);
+}
+.wrap-page {
+  box-sizing: border-box;
+  max-width:130vh; */
+  height: 100vh;
+  margin: 5vh auto 5vh auto;
+  border-bottom-width: 70px;
+  border-radius:10px;
+  padding: 1rem;
+}
+
+
+.content {
+  padding: 20px;
+  background:rgb(232, 207, 211);
+  line-height: 1.6;
+}
+
+.content pic {
+  max-width:50%;
+  float:left;
+  margin-right: 10px;
+}
+
+.content-head {
+  text-align:center;
+}
+ /* весь flexbox сетка и стили*/
+
+.wrap-page {
+  display: -ms-flexbox;  
+  -ms-flex-direction: column;
+  display:flex;
+  flex-direction:column;
+/*   margin: 1rem; */
+}
+/*выбирает все дочерние элементы для wrap-page*/
+.wrap-page > * {
+  flex:1 1 auto;
+}
+
+.page-header {
+ min-heigth: 30px;
+/*   display:flex; */
+/*   flex: 1; */
+  align-items:center;
+  justify-content:space-between;
+  background:rgb(204, 141, 198);
+  color:rgba(0,0,0,0.5);
+  padding:1rem;
+}
+.head-description {
+  margin-left:1rem;
+  text-align: right;
+  flex: 1 1 auto;
+  font-size: 20px;
+}
+.pic-description {
+  text-align: justify;
+  float: 1 1 auto;
+  font-size: 15px;
+  font-style: oblique;
+  margin-top: 0;
+}
+/*
+  для корректного скролла на моб
+*/
+/* .wrap-page {
+  
+/*   overflow-y:scroll; */
+  -webkit-overflow-scrolling:touch;
+ -ms-overflow-scrolling:touch;
+} */
+
+/*footer*/
+.page-footer {
+  /*display: flex;*/
+  justify-content: space-around;
+}
