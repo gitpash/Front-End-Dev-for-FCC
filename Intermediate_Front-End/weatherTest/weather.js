@@ -27,7 +27,7 @@ showWeather = fetchData => {
 
     review.innerHTML = fetchData.daily.summary
     timezone.innerHTML = fetchData.timezone
-    currentT = fetchData.currently.temperature
+    currentT = Math.round(fetchData.currently.temperature)
     tempr.innerHTML =  `${currentT}℃`
     icon = (fetchData.currently.icon).toUpperCase().replace(/-/g,'_')
     
