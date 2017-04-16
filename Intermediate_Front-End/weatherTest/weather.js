@@ -30,6 +30,7 @@ showWeather = fetchData => {
     currentT = Math.round(fetchData.currently.temperature)
     tempr.innerHTML =  `${currentT}℃`
     icon = (fetchData.currently.icon).toUpperCase().replace(/-/g,'_')
+    //icon = fetchData.currently.icon
     
 
 button.addEventListener("click", () => {
@@ -44,7 +45,6 @@ button.addEventListener("click", () => {
  })
 
  const skycons = new Skycons({"color": "pink"})
-
  skycons.add(document.getElementById("icon"), Skycons[icon])
  skycons.play()
  }
