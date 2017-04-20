@@ -1,152 +1,103 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import api from "./api";
 
-var myHeaders = new Headers();
+//const RANDOM_A = 'https://en.wikipedia.org//w/api.php?action=opensearch&format=json&origin=*&search=bee'
+const Search = ({ value, onSubmit, onChange }) => (
+  <form onSubmit={onSubmit}>
+    <input type="text" value={value} onChange={onChange} autoFocus />
+    <button type="submit">
+      go!
+    </button>
+  </form>
+);
 
-var myInit = { method: 'GET',
-               headers: myHeaders,
-               mode: 'no-cors',
-                'Access-Control-Allow-Origin': '*', };
-
-const DEFAULT_QUERY = 'bee';
-const PATH_BASE = 'https://en.wikipedia.org//w/api.php?';
-const PATH_SEARCH = 'action=opensearch&format=json&origin=*';
-const PARAM_SEARCH = 'search=';
-
-const RANDOM_A = 'https://en.wikipedia.org//w/api.php?action=opensearch&format=json&origin=*&search=bee'
-//const list = [
-//   {
-//     title: 'React',
-//     url: 'https://facebook.github.io/react/',
-//     author: 'Jordan Walke',
-//     num_comments: 3,
-//     points: 4,
-//     objectID: 0,
-// }, {
-//     title: 'Redux',
-//     url: 'https://github.com/reactjs/redux',
-//     author: 'Dan Abramov, Andrew Clark, Pavel Luzanov',
-//     num_comments: 2,
-//     points: 5,
-//     objectID: 1
-// }, ];
-
-function isSearched(searchTerm) {
-  return function(item) {
-    return !searchTerm ||
-      item.title.toLowerCase().includes(searchTerm.toLowerCase());
-} }
-
+const ArticlesGrid = props => (
+  <ul className="wrapper-list">
+    {props.title.map((title, index) => (
+      <a href={props.url[index]} target="_blank" key={props.title[index]}>
+        <ul className="articles-block">
+          <h3>{title}</h3>
+          <li className="article">
+            <p>{props.description[index]}</p>
+          </li>
+        </ul>
+      </a>
+    ))}
+  </ul>
+);
 class App extends Component {
   constructor(props) {
-    super(props)
-// связываем любые изменения списка с ре-рендером компонента
+    super(props);
+    // связываем любые изменения списка с ре-рендером компонента
     this.state = {
       result: null,
-      searchTerm: DEFAULT_QUERY,
-    }
-// bind class method inside constructor
-    this.setSearchTopstories = this.setSearchTopstories.bind(this)
-    this.fetchSearchTopstories = this.fetchSearchTopstories.bind(this)
-    this.onSearchChange = this.onSearchChange.bind(this)
-  }
-  
-  setSearchTopstories(result) {
-    this.setState({ result });
-}
-
-fetchSearchTopstories(searchTerm) {
-    fetch(`${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}`, myInit)
-    // fetch(`${RANDOM_A}`)
-      .then(response => response.json())
-      .then(result => this.setSearchTopstories(result))
-      .then(result => console.log(result))
+      searchTerm: "",
+      title: null,
+      description: null,
+      url: null
+    };
+    this.onSearchChange = this.onSearchChange.bind(this);
+    this.onSearchSubmit = this.onSearchSubmit.bind(this);
   }
 
- componentDidMount() {
+  onSearchChange(event) {
+    this.setState({ searchTerm: event.target.value });
+  }
+  onSearchSubmit(event) {
     const { searchTerm } = this.state;
-    this.fetchSearchTopstories(searchTerm);
-}
+    this.setState({ searchKey: searchTerm });
 
-onSearchChange(event) {
-  this.setState({searchTerm: event.target.value})
-}
-  
+    this.searchByRequest(searchTerm);
+    event.preventDefault();
+  }
+
+  searchByRequest(searchTerm) {
+    api.fetchArticles(this.state.searchTerm).then(
+      function(articles) {
+        this.setState(function() {
+          return { title: articles[1] };
+        });
+        this.setState(function() {
+          return {
+            description: articles[2]
+          };
+        });
+        this.setState(function() {
+          return {
+            url: articles[3]
+          };
+        });
+      }.bind(this)
+    );
+  }
+  componentDidMount() {
+    const { searchTerm } = this.state;
+    this.searchByRequest(searchTerm);
+  }
+
   render() {
-    const { searchTerm, result } = this.state
-    if (!result) { return null; }
-
+    const { searchTerm } = this.state;
     return (
-      <div className="App">
+      <div className="page-content">
         <Search
           value={searchTerm}
           onChange={this.onSearchChange}
-         >
-         Search
-         </Search>
-        <Table
-          list={result.hits}
-          pattern={searchTerm}
-         />
+          onSubmit={this.onSearchSubmit}
+        />
+        <div>
+          {!(this.state.title && this.state.url && this.state.description)
+            ? <p className="preloadMessage">Type smth & hit enter</p>
+            : <ArticlesGrid
+                title={this.state.title}
+                description={this.state.description}
+                url={this.state.url}
+              />}
+        </div>
       </div>
     );
   }
 }
-
-const Search = ({ value, onChange, children }) =>
-    
-      <form>
-            {children} <input
-              type="text"
-              value={value}
-              onChange={onChange}
-              />
-      </form>
-    
-  
-
-
-const Table = ({ list, pattern, onDismiss }) =>
-    
-      <div>
-      { list.filter(isSearched(pattern)).map(item => 
-            <div key={item.objectID}>
-              <span>
-                <a href={item.url}>{item.title}</a>
-              </span>
-              <span>{item.author}</span>
-              <span>{item.num_comments}</span>
-              <span>{item.points}</span>
-            </div>
-        )}
-      </div>
-  
-  
-
-// fetchSearch(searchTerm, page) {
-//   fetch(`${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${DEFAULT_QUERY}`)
-//     .then(response => response.json())
-//     .then(result => this.s(result))
-// }
-
-// setSearchFromRespond(result) {
-//   const {hits, page} = result
-//   const {searchKey, results} = this.state
-
-//   const oldHits = results && results[searchKey]
-//     ? results[searchKey].hits
-//     : []
-
-//   const updatedHits = [
-//     ...oldHits,
-//     ...hits
-//   ]
-//     this.setState({
-//     results: {
-//       ...results,
-//       [searchKey]: {hits: updatedHits, page}
-//     }
-//   })
-// }
- 
 export default App;
+
+//
