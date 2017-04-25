@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import "./App.css";
 import api from "./api";
+import PropTypes from "prop-types";
 
-//const RANDOM_A = 'https://en.wikipedia.org//w/api.php?action=opensearch&format=json&origin=*&search=bee'
 const Search = ({ value, onSubmit, onChange }) => (
   <form onSubmit={onSubmit}>
     <input type="text" value={value} onChange={onChange} autoFocus />
@@ -26,6 +25,13 @@ const ArticlesGrid = props => (
     ))}
   </ul>
 );
+
+ArticlesGrid.propTypes = {
+  url: PropTypes.array.isRequired,
+  title: PropTypes.array.isRequired,
+  description: PropTypes.array.isRequired
+};
+
 class App extends Component {
   constructor(props) {
     super(props);

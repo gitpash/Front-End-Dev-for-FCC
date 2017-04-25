@@ -8,13 +8,18 @@
     "react-dom": "^15.5.4"
   },
   "devDependencies": {
+    "babel-jest": "^19.0.0",
+    "babel-preset-env": "^1.4.0",
     "flow-bin": "^0.44.2",
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "react-test-renderer": "^15.5.4",
+    "regenerator-runtime": "^0.10.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
+    "test:cov": "react-scripts test --env=jsdom --coverage",
+    "eject": "react-scripts eject"
   }
 }

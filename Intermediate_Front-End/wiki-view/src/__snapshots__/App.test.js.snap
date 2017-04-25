@@ -1,0 +1,23 @@
+exports[`test renders without crashing 1`] = `
+<div
+  className="page-content">
+  <form
+    onSubmit={[Function]}>
+    <input
+      autoFocus={true}
+      onChange={[Function]}
+      type="text"
+      value="" />
+    <button
+      type="submit">
+      go!
+    </button>
+  </form>
+  <div>
+    <p
+      className="preloadMessage">
+      Type smth & hit enter
+    </p>
+  </div>
+</div>
+`;
