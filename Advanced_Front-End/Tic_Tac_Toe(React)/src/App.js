@@ -16,7 +16,7 @@ class Grid extends React.Component {
 constructor() {
   super()
     this.state = {
-      allCells: Array().fill(null),
+      allCells: Array().fill(null), // set all cell values by null
       nextPlayerState: true,
     }
   }
@@ -24,8 +24,11 @@ constructor() {
   handleClick(i) {
     const allCells = this.state.allCells.slice()
     
-    if (calculateWinner(allCells) || allCells[i])
-       return
+    if (calculateWinner(allCells) || allCells[i]) {
+      window.alert('win')
+      return
+    }
+       //return
     
     allCells[i] = this.state.nextPlayerState ? 'X' : 'O'
     this.setState({
@@ -89,7 +92,7 @@ function calculateWinner(allCells) {
     const [a, b, c] = lines[i];
     if (allCells[a]&&allCells[a] === allCells[b]&&allCells[a] === allCells[c]) {
       winLine = lines[i];
-      console.log(winLine.length)
+      console.log(winLine)
       return allCells[a]
     }
   }
