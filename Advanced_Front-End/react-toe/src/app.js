@@ -10,48 +10,61 @@ const GameCell = props => (
 );
 
 const Console = props => (
+  console.log(props),
   <div className="logText">
     <p>Next Turn: {props.value ? "X" : "O"}</p>
-    {props.win ? <p>'Winner is: '{}</p> : null}
+    {props.win ? <p>Winner is: {props.lastPlayer}</p> : null}
   </div>
 );
+
+
+
 // all game grid + logic
 class Grid extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      allCells: Array().fill(null),
+      allCells: Array(9).fill(null),
       nextPlayerState: true,
       win: false
     };
   }
-
+  
+// click fn with prevent reassign value
   handleClick(i) {
     const allCells = this.state.allCells.slice();
-
-    if (calculateWinner(allCells) || allCells[i]) {
-      this.setState({ win: true });
-      return;
-    }
-    //return
-
-    allCells[i] = this.state.nextPlayerState ? "X" : "O";
-    this.setState({
-      allCells: allCells,
-      nextPlayerState: !this.state.nextPlayerState
-    });
+    // console.log('before', this.state.allCells[i])
+    if (this.state.allCells[i] !== null ) return;
+    else {
+      allCells[i] = this.state.nextPlayerState ? "X" : "O";
+      this.setState({
+        allCells: allCells,
+        nextPlayerState: !this.state.nextPlayerState,
+        lastPlayer: allCells[i]
+      });  
   }
-
+      if (calculateWinner(allCells) ) {
+        this.setState({ win: true });
+        return;
+      }
+  }
   drawCell(i) {
+    if (this.state.win === false)
     return (
       <GameCell
         value={this.state.allCells[i]}
         onClick={() => this.handleClick(i)}
       />
-    );
+    )
+      else {
+        return (
+          <GameCell value={this.state.allCells[i]} onClick={() => null}/>
+        )
+      }
+    
   }
-
+  
 
   render() {
     return (
@@ -71,7 +84,7 @@ class Grid extends React.Component {
           {this.drawCell(7)}
           {this.drawCell(8)}
         </div>
-        <Console value={this.state.nextPlayerState} win={this.state.win} />
+        <Console value={this.state.nextPlayerState} win={this.state.win} lastPlayer={this.state.lastPlayer} />
       </div>
     );
   }
@@ -105,11 +118,10 @@ function calculateWinner(allCells) {
       allCells[a] === allCells[b] &&
       allCells[a] === allCells[c]
     ) {
-     
       winLine = lines[i];
       console.log(winLine);
-      // return allCells[a];
-         return allCells
+      return allCells[a];
+      //  return allCells[a]
     }
   }
   return null;
