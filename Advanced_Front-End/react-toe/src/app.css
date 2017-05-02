@@ -30,7 +30,6 @@ body {
   width: 70px;
   color: black;
 }
-
 .board-row  {
   clear: both;
   content: "";
@@ -39,4 +38,8 @@ body {
 }
 .btn-win {
   background:grey;
+}
+.log-text {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  color: red;
 }
