@@ -1,2 +1,1 @@
-# React_Boilerplate
-boilerplate for react webapp
+# Create Tic_Tac_Toe game on React

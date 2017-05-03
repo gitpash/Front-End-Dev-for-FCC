@@ -43,3 +43,13 @@ body {
   font: 14px "Century Gothic", Futura, sans-serif;
   color: red;
 }
+
+.start-game {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin: 30px;
+  border: 1px solid red;
+  width: 100px;
+  /*height: 100px;*/
+}
