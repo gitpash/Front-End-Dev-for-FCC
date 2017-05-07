@@ -8,9 +8,6 @@ function steamrollArray(arr) {
     });
   }
   getEl(arr)
-  // arr.forEach(function getEl(el) {
-  //   Array.isArray(el) ? getEl(el) : r.push(el);
-  // });
   console.log(r);
 }
 steamrollArray([1, [2], [3, [[4]]]]);
