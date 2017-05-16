@@ -1,0 +1,76 @@
+body {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0;
+  font:10px 'OCR A Std';
+}
+
+.calc-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /*border: 1px solid red;*/
+  width: 300px;
+  height: 400px;
+  background-color: #E5E5E5;
+  box-shadow:3px 3px 9px #000;
+  border-radius: 10px;
+}
+
+.display {
+  margin-top: 20px;
+  /*border: 1px solid green;*/
+  margin-left: 20px;
+  height: 40px;
+  width: 260px;
+  background-color: #FFF8DC;
+  border-radius: 3px; 
+}
+
+p {
+  /*border: 1px solid pink;*/
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  padding-top: 3px;
+  font-size: 30px;
+}
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 20px 0px 20px;
+  /*border: 1px solid plum;*/
+}
+.num-pad {
+  display: flex;
+  margin-left: 20px;
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+.digit-block {
+  /*border: 1px solid blue;*/
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+justify-content: center;
+  width: 200px;
+  /*margin-bottom: 30px; */
+}
+.action-bar {
+  display: flex;
+  /*border: 1px solid pink;*/
+  flex-direction: column;
+  width: auto;
+  /*margin-top: 40px;*/
+}
+button {
+  /*font-weight: bold;*/
+  font-size: 13px;
+  width: 45px;
+  height: 35px;
+  border-radius: 50px;
+  margin: 0.7em;
+  box-shadow:1px 1px 3px #000;
+  outline: none;
+}

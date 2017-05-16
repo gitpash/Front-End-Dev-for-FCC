@@ -1,0 +1,21 @@
+body {
+  
+}
+
+.app-container {
+ width: 400px;
+ height: 400px;
+ background-color: olive;
+}
+
+.box-timer {
+
+}
+
+.circle {
+  display: block;
+  border-radius: 50px;
+  background: red;
+  width: 100px;
+  height: 100px;
+}
