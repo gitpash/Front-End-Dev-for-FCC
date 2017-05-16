@@ -7,8 +7,8 @@ let result = "";
 let arg1, arg2, arg3;
 
 class ButtonsBlock extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       displayDigit: displayedValue,

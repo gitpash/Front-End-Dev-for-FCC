@@ -2,14 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleActive = this.handleActive.bind(this);
+  constructor() {
+    super();
+    
     this.state = {
       displayCount: 25,
       isRunning: "active"
     };
+    this.handleClick = this.handleClick.bind(this);
+    this.handleActive = this.handleActive.bind(this);
   }
   handleClick() {
     const { displayCount, isRunning } = this.state;
