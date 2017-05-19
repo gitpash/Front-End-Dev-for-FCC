@@ -12,13 +12,15 @@ body {
 h1 {
   color: #961717;
 }
-h5 {
+h4 {
   margin: 0;
+
 }
+
 .app-container {
  width: 400px;
  height: 600px;
- background-color:#A86653;
+ background-color:#FFAD95;
  display: flex;
  flex-direction: column;
  justify-content: space-around;
@@ -29,13 +31,13 @@ h5 {
 .mainTimer {
   display: flex;
   align-items: center;
-  color: #DDC8C2;
+  color: #574945;
   font-size: 25px;
 }
 .breakTimer {
   display: flex;
   align-items: center;
-  color: #DDC8C2;
+  color: #574945;
   font-size: 25px;
 }
 .handle-btn {
@@ -49,6 +51,11 @@ button {
     box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
     cursor: pointer;
     margin: 0 4px;
+    color: snow;
+}
+span {
+  color: #961717;
+  margin: 0 7px;
 }
 .circle {
   display: flex;
@@ -59,10 +66,14 @@ button {
   width: 200px;
   height: 200px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 8px 20px 0 rgba(0,0,0,0.19);
+  cursor: pointer;
 }
 p {
   font-size: 40px;
   color: #DDC8C2;
+}
+.reset {
+  font-size: 15px;
 }
 @media only screen and (max-device-width: 640px) {
 .app-container {

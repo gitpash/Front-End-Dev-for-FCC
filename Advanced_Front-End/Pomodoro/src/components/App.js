@@ -46,11 +46,11 @@ class App extends React.Component {
       displaySec === "00" || displaySec === 0
         ? this.setState({
             displayMin: displayMin > 0 ? displayMin - 1 : 0,
-            displaySec: 9
+            displaySec: 59
           })
         : this.setState({ displaySec: displaySec - 1 });
     }
-  }
+  };
   // it's important to add intervalId overwise render reject clearInterval
   handleActive = () => {
     const { isRunning } = this.state;
@@ -66,46 +66,66 @@ class App extends React.Component {
       });
       clearInterval(this.state.intervalId);
     }
-  }
-  handleIncrease = (value) => {
+  };
+  handleIncrease = value => {
+    const {
+      displayMin,
+      keepBreakingTime,
+      keepWorkingTime,
+      displayBreak,
+      isRunning,
+      intervalId
+    } = this.state;
     if (value === "work") {
-      const { displayMin } = this.state;
-      this.setState({ displayMin: displayMin + 1 });
+      this.setState({
+        displayMin: displayMin + 1,
+        displaySec: "00",
+        keepWorkingTime: keepWorkingTime + 1,
+        isRunning: "active"
+      });
     } else {
-      const { displayBreak, keepBreakingTime } = this.state;
       this.setState({
         displayBreak: displayBreak + 1,
         keepBreakingTime: keepBreakingTime + 1
       });
     }
-  }
-  handleDecrease = (value) => {
+    clearInterval(intervalId);
+  };
+  handleDecrease = value => {
+    const {
+      displayMin,
+      keepWorkingTime,
+      keepBreakingTime,
+      displayBreak,
+      isRunning,
+      intervalId
+    } = this.state;
     if (value === "work") {
-      const { displayMin, keepWorkingTime } = this.state;
       this.setState({
         displayMin: displayMin > 1 ? displayMin - 1 : 1,
-        keepWorkingTime: keepWorkingTime > 1 ? keepWorkingTime - 1 : 1
+        keepWorkingTime: keepWorkingTime > 1 ? keepWorkingTime - 1 : 1,
+        isRunning: "active",
+        displaySec: "00"
       });
     } else {
-      const { displayMin, keepBreakingTime, displayBreak } = this.state;
       this.setState({
         displayBreak: displayBreak > 1 ? displayBreak - 1 : 1,
         keepBreakingTime: keepBreakingTime > 1 ? keepBreakingTime - 1 : 1
       });
     }
-  }
+    clearInterval(intervalId);
+  };
   handleReset = () => {
-    const {
-      intervalId
-    } = this.state;
+    const { intervalId } = this.state;
     this.setState({
       displayMin: 25,
       displaySec: "00",
       displayBreak: 5,
-      isRunning:"active",
-      keepBreakingTime: 5
-    })
-    clearInterval(intervalId)
+      isRunning: "active",
+      keepBreakingTime: 5,
+      intervalId: ""
+    });
+    clearInterval(intervalId);
   };
   render() {
     const {
@@ -119,7 +139,7 @@ class App extends React.Component {
       <div className="app-container">
         <div className="header">
           <h1>Pomodoro Timer</h1>
-          <h5>tap circle to start/pause timer</h5>
+          <h4>tap circle to start/pause timer</h4>
         </div>
         <div className="mainTimer">
           __set working time:
@@ -129,7 +149,7 @@ class App extends React.Component {
           </div>
         </div>
         <div className="breakTimer">
-          __set break to:{keepBreakingTime}min
+          __set break <span> {keepBreakingTime} </span>min
           <div className="handle-btn">
             <button onClick={this.handleIncrease}>+</button>
             <button onClick={this.handleDecrease}>-</button>
@@ -153,5 +173,14 @@ class App extends React.Component {
     );
   }
 }
-
+App.propTypes = {
+  displayBreak: PropTypes.number,
+  displayCount: PropTypes.number,
+  displayMin: PropTypes.number,
+  displaySec: PropTypes.number,
+  isRunning: PropTypes.string,
+  keepBreakingTime: PropTypes.number,
+  keepWorkingTime: PropTypes.number,
+  intervalId: PropTypes.number
+};
 export default App;
