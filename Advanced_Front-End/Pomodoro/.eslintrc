@@ -1,6 +1,7 @@
 {
   "extends": [
-    "kentcdodds"
+    "kentcdodds",
+    "prettier"
   ],
   "plugins": [
     "react"
