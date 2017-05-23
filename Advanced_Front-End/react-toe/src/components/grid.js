@@ -54,6 +54,7 @@ class Grid extends React.Component {
   }
 
   render() {
+    console.log(this.state.allCells)
     return (
       <div className="game-board">
         <div className="board-row">

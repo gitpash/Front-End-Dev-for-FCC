@@ -13,20 +13,21 @@ class App extends React.Component {
 
     this.state = {
       showGrid: false,
-      text: 'Start Game!'
+      text: "Start Game!"
     };
   }
-  onClick() {
-    this.setState({showGrid: true})
-  } 
+  onClick = () => {
+    this.setState({ showGrid: true });
+  };
   render() {
     return (
       <div className="main-grid">
-        {this.state.showGrid ? <Grid /> : <StartGame onClick={this.onClick.bind(this)} text={this.state.text}/>}
-          
+        {this.state.showGrid
+          ? <Grid />
+          : <StartGame onClick={this.onClick} text={this.state.text} />}
+
       </div>
-    
-    )
+    );
   }
 }
 
