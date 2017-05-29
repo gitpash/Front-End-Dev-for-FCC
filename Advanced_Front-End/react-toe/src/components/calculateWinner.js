@@ -18,9 +18,7 @@ function calculateWinner(allCells) {
       allCells[a] === allCells[c]
     ) {
       winLine = lines[i];
-      console.log(winLine);
-      return allCells[a];
-      //  return allCells[a]
+      return winLine
     }
   }
   return null;

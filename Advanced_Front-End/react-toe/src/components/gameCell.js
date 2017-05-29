@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const GameCell = props => {
   if (!props.win) {
@@ -6,25 +6,26 @@ const GameCell = props => {
       <button className="gameCell" onClick={() => props.onClick()}>
         {props.value}
       </button>
-    );
+    )
   } else {
-    if (props.value === props.winner) {
+    // check if winning array include certain cell and make it red
+    if (props.winline.includes(props.i)) {
       return (
         <button
           className="gameCell"
           onClick={() => props.onClick()}
-          style={{ color: "red" }}
+          style={{color: 'red'}}
         >
           {props.value}
         </button>
-      );
+      )
     } else {
       return (
         <button className="gameCell" onClick={() => props.onClick()}>
           {props.value}
         </button>
-      );
+      )
     }
   }
-};
-export default GameCell;
+}
+export default GameCell
