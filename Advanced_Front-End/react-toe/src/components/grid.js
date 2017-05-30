@@ -150,11 +150,7 @@ function miniMax(depth, palyer) {
 const a = ['x', 'o', null, 'x', 'o', 'x', 'o', null]
 function legalMove(allCells) {
   let moves = []
-  allCells.forEach((cell, index) => {
-    if (cell === null) {
-      moves.push(index)
-    }
-  })
+  allCells.forEach((cell, index) => (cell === null ? moves.push(index) : null))
   console.log(moves)
 }
 legalMove(a)
