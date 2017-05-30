@@ -14,20 +14,13 @@ class Grid extends React.Component {
       mode: this.props.mode,
       nextTurn: 'X',
       winLine: [],
+      draw: false,
     }
   }
-
-  // componentWillReceiveProps() {
-  // const {allCells} = this.state
-  //     if (calculateWinner(allCells)) {
-  //       this.setState({win: true})
-  //     }
-  // }
 
   // for AI turn
   componentDidUpdate() {
     const {nextPlayerState, mode, nextTurn, win} = this.state
-    // console.log(mode, win, nextPlayerState, nextTurn)
     mode === 'single' &&
       nextPlayerState === false &&
       nextTurn === 'O' &&
@@ -36,32 +29,35 @@ class Grid extends React.Component {
       null
   }
   randomTurn(min, max) {
-    const {nextPlayerState, allCells, nextTurn} = this.state
+    const {nextPlayerState, allCells, nextTurn, win} = this.state
     let x = 0
     min = Math.ceil(min)
     max = Math.floor(max)
     function findMove() {
       x = Math.floor(Math.random() * (max - min + 1)) + min
       if (allCells[x] === null) {
-        // console.log(allCells)
         return x
       } else {
         findMove()
       }
       return null
     }
-    findMove()
-    allCells[x] = 'O'
-    const winLine = calculateWinner(allCells)
-    winLine !== null ?
-      this.setState({
-        win: true,
-        lastPlayer: 'O',
-        nextTurn: 'X',
-        winLine,
-        allCells,
-      }) :
-      this.setState({nextPlayerState: true})
+    if (allCells.includes(null)) {
+      findMove()
+      allCells[x] = 'O'
+      const winLine = calculateWinner(allCells)
+      winLine !== null ?
+        this.setState({
+          win: true,
+          lastPlayer: 'O',
+          nextTurn: 'X',
+          winLine,
+          allCells,
+        }) :
+        this.setState({nextPlayerState: true})
+    } else {
+      win === false ? this.setState({draw: true}) : null
+    }
   }
   // click fn and prevent reassign value
   handleClick(i) {
@@ -79,7 +75,10 @@ class Grid extends React.Component {
           lastPlayer: allCells[i],
           nextTurn: 'O',
         })
-      console.log(winLine)
+      allCells.includes(null) === -1 && win ?
+        this.setState({draw: true}) :
+        null
+      //console.log(winLine, allCells)
     }
   }
   drawCell(i) {
@@ -107,6 +106,7 @@ class Grid extends React.Component {
   }
 
   render() {
+    const {nextPlayerState, lastPlayer, win, draw} = this.state
     return (
       <div className="game-board">
         <div className="board-row">
@@ -125,9 +125,10 @@ class Grid extends React.Component {
           {this.drawCell(8)}
         </div>
         <DisplayText
-          value={this.state.nextPlayerState}
-          win={this.state.win}
-          lastPlayer={this.state.lastPlayer}
+          value={nextPlayerState}
+          win={win}
+          lastPlayer={lastPlayer}
+          draw={draw}
         />
       </div>
     )
@@ -135,3 +136,25 @@ class Grid extends React.Component {
 }
 
 export default Grid
+
+function miniMax(depth, palyer) {
+  let bestMove = -1
+  // let bestScore = player === 'O' ? -Infinity : Infinity
+  let score = 0
+  if (calculateWinner() || allCells.includes(null) === -1 || depth === 0) {
+    score = scoreBoard()
+    return [score, bestMove]
+  }
+}
+
+const a = ['x', 'o', null, 'x', 'o', 'x', 'o', null]
+function legalMove(allCells) {
+  let moves = []
+  allCells.forEach((cell, index) => {
+    if (cell === null) {
+      moves.push(index)
+    }
+  })
+  console.log(moves)
+}
+legalMove(a)

@@ -30,6 +30,10 @@ body {
   width: 70px;
   color: black;
 }
+.gameCell:hover {
+  background: olive;
+  cursor: pointer;
+}
 .board-row  {
   clear: both;
   content: "";
