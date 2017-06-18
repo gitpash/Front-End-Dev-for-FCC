@@ -18,23 +18,19 @@ class App extends React.Component {
       mode: ''
     }
   }
-  onClick = () => {
-    this.setState({showGrid: true})
-  }
 
   handleOnePlayer = () => {
-    this.setState({mode: 'single'})
+    this.setState({mode: 'single', showGrid: true})
   }
   handleTwoPlayer = () => {
-    this.setState({mode: 'multi'})
+    this.setState({mode: 'multi', showGrid: true})
   }
   render() {
     return (
       <div className="main-grid">
         {this.state.showGrid ?
           <Grid mode={this.state.mode}/> :
-          <StartGame
-              onClick={this.onClick}
+          <StartGame            
               handleOnePlayer={this.handleOnePlayer}
               handleTwoPlayer={this.handleTwoPlayer}
               text={this.state.text}

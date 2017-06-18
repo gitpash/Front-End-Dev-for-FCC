@@ -1,7 +1,7 @@
 import React from 'react'
 import GameCell from './gameCell'
 import DisplayText from './displayText'
-import calculateWinner from './calculateWinner'
+import {calculateWinner, scoreBoard, legalMove, miniMax} from './calculateWinner'
 
 class Grid extends React.Component {
   constructor(props) {
@@ -25,7 +25,8 @@ class Grid extends React.Component {
       nextPlayerState === false &&
       nextTurn === 'O' &&
       win === false ?
-      this.randomTurn(0, 9) :
+      // this.randomTurn(0, 9) :
+      this.AIAmove() :
       null
   }
   randomTurn(min, max) {
@@ -36,6 +37,7 @@ class Grid extends React.Component {
     function findMove() {
       x = Math.floor(Math.random() * (max - min + 1)) + min
       if (allCells[x] === null) {
+        console.log('!')
         return x
       } else {
         findMove()
@@ -46,7 +48,7 @@ class Grid extends React.Component {
       findMove()
       allCells[x] = 'O'
       const winLine = calculateWinner(allCells)
-      winLine !== null ?
+      winLine[0] === true ?
         this.setState({
           win: true,
           lastPlayer: 'O',
@@ -59,6 +61,11 @@ class Grid extends React.Component {
       win === false ? this.setState({draw: true}) : null
     }
   }
+  AIAmove = () => {
+    const {nextPlayerState, allCells, nextTurn, win} = this.state
+     let res = miniMax(4, 'O', -Infinity, Infinity, allCells)
+        console.log(res)
+  }
   // click fn and prevent reassign value
   handleClick(i) {
     const allCells = this.state.allCells
@@ -67,7 +74,7 @@ class Grid extends React.Component {
     } else {
       allCells[i] = this.state.nextPlayerState ? 'X' : 'O'
       const winLine = calculateWinner(allCells)
-      winLine !== null ?
+      winLine[0] === true ?
         this.setState({win: true, allCells, lastPlayer: 'X', winLine}) :
         this.setState({
           allCells,
@@ -137,20 +144,3 @@ class Grid extends React.Component {
 
 export default Grid
 
-function miniMax(depth, palyer) {
-  let bestMove = -1
-  // let bestScore = player === 'O' ? -Infinity : Infinity
-  let score = 0
-  if (calculateWinner() || allCells.includes(null) === -1 || depth === 0) {
-    score = scoreBoard()
-    return [score, bestMove]
-  }
-}
-
-const a = ['x', 'o', null, 'x', 'o', 'x', 'o', null]
-function legalMove(allCells) {
-  let moves = []
-  allCells.forEach((cell, index) => (cell === null ? moves.push(index) : null))
-  console.log(moves)
-}
-legalMove(a)
