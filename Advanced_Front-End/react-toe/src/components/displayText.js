@@ -8,6 +8,7 @@ const DisplayText = props => (
           <p>Next Turn: {props.value ? 'X' : 'O'}</p> :
           <p>Winner is: {props.lastPlayer}</p> :
       <p>It's Draw!</p>}
+    {props.win || props.draw ? <button className="btn-restart" onClick={props.handleRestart}>play again!</button> : null}
   </div>
 )
 

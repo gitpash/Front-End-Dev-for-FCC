@@ -43,6 +43,10 @@ body {
 .btn-win {
   background:grey;
 }
+.btn-mainMenu {
+  width: auto;
+  background: red;
+}
 .log-text {
   font: 14px "Century Gothic", Futura, sans-serif;
   color: red;

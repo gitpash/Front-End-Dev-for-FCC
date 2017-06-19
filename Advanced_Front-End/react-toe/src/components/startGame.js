@@ -6,9 +6,9 @@ class StartGame extends React.Component {
     //console.log(this.props)
     return (
       <div className="start-game">
+      <p>To start the game choose mode</p>
         <button onClick={this.props.handleOnePlayer}>onePlayer</button>
         <button onClick={this.props.handleTwoPlayer}>twoPlayer</button>
-        <button onClick={this.props.onClick}>{this.props.text}</button>
       </div>
     )
   }

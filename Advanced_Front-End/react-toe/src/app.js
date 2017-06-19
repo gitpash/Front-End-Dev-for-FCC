@@ -25,10 +25,14 @@ class App extends React.Component {
   handleTwoPlayer = () => {
     this.setState({mode: 'multi', showGrid: true})
   }
+  handleReset = () => {
+    this.setState({showGrid: false})
+  }
   render() {
     return (
       <div className="main-grid">
-        {this.state.showGrid ?
+      <button className="btn-mainMenu" onClick={this.handleReset}>Main menu -)</button>
+              {this.state.showGrid ?
           <Grid mode={this.state.mode}/> :
           <StartGame            
               handleOnePlayer={this.handleOnePlayer}
