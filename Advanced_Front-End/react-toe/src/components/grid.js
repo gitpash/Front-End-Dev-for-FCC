@@ -9,7 +9,6 @@ import {
   aiNextMove
 } from "./AI";
 
-
 class Grid extends React.Component {
   constructor(props) {
     super(props);
@@ -26,16 +25,13 @@ class Grid extends React.Component {
       restart: this.props.restart
     };
   }
-
-  // for AI turn
   componentDidUpdate() {
     const { nextPlayerState, mode, nextTurn, win, restart } = this.state;
     mode === "single" &&
       nextPlayerState === false &&
       nextTurn === "O" &&
       win === false
-      ? // this.randomTurn(0, 9) :
-        this.AIAmove()
+      ? this.AIAmove()
       : null;
   }
   handleRestart = () => {
@@ -49,40 +45,9 @@ class Grid extends React.Component {
       draw: false,
       lastPlayer: "",
       restart: false
-    })
-  }
-  randomTurn(min, max) {
-    const { nextPlayerState, allCells, nextTurn, win } = this.state;
-    let x = 0;
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    function findMove() {
-      x = Math.floor(Math.random() * (max - min + 1)) + min;
-      if (allCells[x] === null) {
-        console.log("!");
-        return x;
-      } else {
-        findMove();
-      }
-      return null;
-    }
-    if (allCells.includes(null)) {
-      findMove();
-      allCells[x] = "O";
-      const winLine = calculateWinner(allCells);
-      winLine[0] === true
-        ? this.setState({
-            win: true,
-            lastPlayer: "O",
-            nextTurn: "X",
-            winLine,
-            allCells
-          })
-        : this.setState({ nextPlayerState: true });
-    } else {
-      win === false ? this.setState({ draw: true }) : null;
-    }
-  }
+    });
+  };
+
   AIAmove = () => {
     const { nextPlayerState, allCells, nextTurn, win } = this.state;
 
@@ -107,9 +72,14 @@ class Grid extends React.Component {
     } else {
       allCells[i] = this.state.nextPlayerState ? "X" : "O";
       const winLine = calculateWinner(allCells);
-      console.log(allCells)
+      console.log(allCells);
       winLine[0] === true
-        ? this.setState({ win: true, allCells, lastPlayer: allCells[i], winLine: winLine[1] })
+        ? this.setState({
+            win: true,
+            allCells,
+            lastPlayer: allCells[i],
+            winLine: winLine[1]
+          })
         : this.setState({
             allCells,
             nextPlayerState: !this.state.nextPlayerState,

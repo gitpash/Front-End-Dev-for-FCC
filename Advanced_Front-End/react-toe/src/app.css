@@ -1,12 +1,21 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
-  background-color:;
-   
-   
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#app {
+  background-color: lightseagreen;
 }
 .main-grid {
-  color: blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50vh;
+  color: olive;
   font-size: 10px;
+  margin: 10vh;
 }
 .game-board {
   display: flex;
@@ -16,48 +25,83 @@ body {
 }
 
 .gameCell {
-   background: lightcyan;
-  border: 1px solid #999;
+  background: cornsilk;
   float: left;
   font-size: 24px;
   font-weight: bold;
   line-height: 34px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 70px;
-  color: black;
+  border-radius: 50%;
+  color: plum;
 }
 .gameCell:hover {
-  background: olive;
+  background: pink;
   cursor: pointer;
 }
-.board-row  {
+.board-row {
   clear: both;
   content: "";
   display: table;
-  border: 1px solid black;
 }
 .btn-win {
-  background:grey;
+  background: grey;
 }
 .btn-mainMenu {
-  width: auto;
-  background: red;
+  background: lightsalmon;
+  background: orange;
+  color: snow;
+  font-size: 15px;
+  border-radius: 5px;
+  border-color: lightblue;
+  margin: 1vh;
+  overflow: hidden;
+}
+.btn-mode {
+  background: orange;
+  margin: 1em;
+  width: 20vh;
+  border-radius: 5px;
+  border-color: lightblue;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  color: snow;
+  font-size: 15px;
+  text-align: center;
+}
+.btn-restart {
+  margin-left: 10px;
+  font-size: 15px;
+  background: orange;
+  color: snow;
 }
 .log-text {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  color: red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 18px "Century Gothic", Futura, sans-serif;
+  color: snow;
 }
 
 .start-game {
   display: flex;
-  justify-content: center;
-  align-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   margin: 30px;
-  border: 1px solid red;
   width: 300px;
-  /*height: 100px;*/
+  background: pink;
+}
+span {
+  color: pink;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) and (device-aspect-ratio: 2/3) and (orientation: portrait) {
+  .gameCell {
+    width: 80px;
+    height: 80px;
+  }
 }

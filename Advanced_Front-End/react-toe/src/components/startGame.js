@@ -1,17 +1,20 @@
-import React from 'react'
-import css from '../app.css'
+import React from "react";
+import css from "../app.css";
 
 class StartGame extends React.Component {
   render() {
-    //console.log(this.props)
     return (
       <div className="start-game">
-      <p>To start the game choose mode</p>
-        <button onClick={this.props.handleOnePlayer}>onePlayer</button>
-        <button onClick={this.props.handleTwoPlayer}>twoPlayer</button>
+        <h2>To start the game choose mode</h2>
+        <button className="btn-mode" onClick={this.props.handleOnePlayer}>
+          single mode
+        </button>
+        <button className="btn-mode" onClick={this.props.handleTwoPlayer}>
+          multiplayer
+        </button>
       </div>
-    )
+    );
   }
 }
 
-export default StartGame
+export default StartGame;
