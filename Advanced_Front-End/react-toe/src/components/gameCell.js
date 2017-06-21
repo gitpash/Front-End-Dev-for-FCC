@@ -12,9 +12,8 @@ const GameCell = props => {
     if (props.winline.includes(props.i)) {
       return (
         <button
-          className="gameCell"
+          className="gameCell winLine"
           onClick={() => props.onClick()}
-          style={{ color: "orange" }}
         >
           {props.value}
         </button>

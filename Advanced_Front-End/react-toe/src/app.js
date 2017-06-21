@@ -5,7 +5,6 @@ import GameCell from "./components/gameCell";
 import DisplayText from "./components/displayText";
 import Grid from "./components/grid";
 import StartGame from "./components/startGame";
-let a = false;
 
 class App extends React.Component {
   constructor() {
