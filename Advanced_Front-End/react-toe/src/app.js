@@ -1,47 +1,32 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import css from "./app.css";
-import GameCell from "./components/gameCell";
-import DisplayText from "./components/displayText";
-import Grid from "./components/grid";
-import StartGame from "./components/startGame";
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import css from './app.css';
+import GameCell from './components/gameCell';
+import DisplayText from './components/displayText';
+import Grid from './components/grid';
+import StartGame from './components/startGame';
 
-class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      showGrid: false,
-      text: "Start Game!",
-      mode: ""
-    };
-  }
-
-  handleOnePlayer = () => {
-    this.setState({ mode: "single", showGrid: true });
-  };
-  handleTwoPlayer = () => {
-    this.setState({ mode: "multi", showGrid: true });
-  };
-  handleReset = () => {
-    this.setState({ showGrid: false });
-  };
-  render() {
-    return (
-      <div className="main-grid">
-        <button className="btn-mainMenu" onClick={this.handleReset}>
-          Menu
-        </button>
-        {this.state.showGrid
-          ? <Grid mode={this.state.mode} />
-          : <StartGame
-              handleOnePlayer={this.handleOnePlayer}
-              handleTwoPlayer={this.handleTwoPlayer}
-              text={this.state.text}
-            />}
-      </div>
-    );
-  }
+function App() {
+  const [gameMode, setGameMode] = useState(null);
+  
+  return (
+    <div className="main-grid">
+      {gameMode ? (
+        <Grid mode={gameMode} />
+      ) : (
+        <>
+          <button className="btn-mainMenu" onClick={() => setGameMode(null)}>
+            Menu
+          </button>
+          <StartGame
+            handleOnePlayer={() => setGameMode('single')}
+            handleTwoPlayer={() => setGameMode('multi')}
+            text="Start Game!"
+          />
+        </>
+      )}
+    </div>
+  );
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById('app'));
