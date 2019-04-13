@@ -1,8 +1,8 @@
 let winLine = [];
 let aiNextMove;
-const letters = { human: "X", AI: "O" };
+const letters = { human: 'X', AI: 'O' };
 function alternatePlayer(currentPlayer) {
-  return currentPlayer == "human" ? "AI" : "human";
+  return currentPlayer === 'human' ? 'AI' : 'human';
 }
 
 function calculateWinner(allCells) {
@@ -14,7 +14,7 @@ function calculateWinner(allCells) {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6]
+    [2, 4, 6],
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
@@ -30,34 +30,40 @@ function calculateWinner(allCells) {
   return [false, []];
 }
 
+function legalMove(allCells) {
+  const moves = [];
+  allCells.forEach((cell, index) => (cell === null ? moves.push(index) : null));
+  return moves;
+}
+
 function miniMax(player, allCells, depth = 0, alpha, beta) {
   if (calculateWinner(allCells)[0]) {
-    return player === "AI" ? depth - 10 : 10 - depth;
-  } else if (allCells.includes(null) === false) {
-    return 0;
-  } else if (depth >= 6) {
+    return player === 'AI' ? depth - 10 : 10 - depth;
+  }
+  if (allCells.includes(null) === false || depth >= 6) {
     return 0;
   }
 
   // define free moves
-  let freeMoves = legalMove(allCells); // [0,2,7]
+  const freeMoves = legalMove(allCells); // [0,2,7]
 
-  if (player === "AI") {
+  if (player === 'AI') {
     for (let i = 0; i < freeMoves.length; i++) {
       // duplicates board variable to pass a modified board as parameter to recursive call
-      let testBoard = allCells.slice(0, allCells.length);
+      const testBoard = allCells.slice(0, allCells.length);
 
       testBoard[freeMoves[i]] = letters[player];
 
-      let score = miniMax(
+      const score = miniMax(
         alternatePlayer(player),
         testBoard,
         depth + 1,
         alpha,
-        beta
+        beta,
       );
 
       if (score > alpha) {
+        /* eslint-disable no-param-reassign */
         alpha = score;
 
         if (depth === 0) {
@@ -70,49 +76,43 @@ function miniMax(player, allCells, depth = 0, alpha, beta) {
       }
     }
     return alpha;
-  } else {
-    for (let i = 0; i < freeMoves.length; i++) {
-      let testBoard = allCells.slice(0, allCells.length);
-      testBoard[freeMoves[i]] = letters[player];
+  }
 
-      let score = miniMax(
-        alternatePlayer(player),
-        testBoard,
-        depth + 1,
-        alpha,
-        beta
-      );
-      // alpha-beta pruning
-      if (score < beta) {
-        beta = score;
-      }
-      if (alpha >= beta) {
-        break;
-      }
+  for (let i = 0; i < freeMoves.length; i++) {
+    const testBoard = allCells.slice(0, allCells.length);
+    testBoard[freeMoves[i]] = letters[player];
+
+    const score = miniMax(
+      alternatePlayer(player),
+      testBoard,
+      depth + 1,
+      alpha,
+      beta,
+    );
+    // alpha-beta pruning
+    if (score < beta) {
+      beta = score;
     }
-    return beta;
+    if (alpha >= beta) {
+      break;
+    }
   }
+  return beta;
 }
 
-function legalMove(allCells) {
-  let moves = [];
-  allCells.forEach((cell, index) => (cell === null ? moves.push(index) : null));
-  return moves;
-}
+// check win or not
+// function scoreBoard(allCells, player) {
+//   let score = 0;
+//   const a = calculateWinner(allCells)[1];
+//   if (a.length === 3) {
+//     allCells[a[0]] === 'X' ? (score += 10) : (score += -10);
+//   }
+//   return score;
+// }
 
-// check win or not and
-function scoreBoard(allCells, player) {
-  let score = 0;
-  let a = calculateWinner(allCells)[1];
-  if (a.length === 3) {
-    allCells[a[0]] === "X" ? (score += 10) : (score += -10);
-  }
-  return score;
-}
-
-//test
+/** test */
 // let board1 = ["X", "O", null, "X", "O", "X", "O", null, null];
 // let board2 = [null, "X", null, "O", "O", "X", "X", null, "O"];
 // let board3 = ["X", "O", null, "O", "O", "X", "X", null, null];
 
-export { calculateWinner, legalMove, alternatePlayer, miniMax, aiNextMove };
+export { calculateWinner, alternatePlayer, miniMax, aiNextMove };

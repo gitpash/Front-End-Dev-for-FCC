@@ -1,149 +1,115 @@
-import React from "react";
-import GameCell from "./gameCell";
-import DisplayText from "./displayText";
-import {
-  calculateWinner,
-  legalMove,
-  alternatePlayer,
-  miniMax,
-  aiNextMove
-} from "./AI";
+import React, { useState, useEffect } from 'react';
+import GameCell from './gameCell';
+import DisplayText from './displayText';
+import { calculateWinner, miniMax, aiNextMove } from './AI';
 
-class Grid extends React.Component {
-  constructor(props) {
-    super(props);
+function Grid({ mode }) {
+  const blankField = new Array(9).fill(null);
+  const [allCells, setAllCells] = useState(blankField);
+  const [nextPlayerState, setNextPlayerState] = useState(true);
+  const [lastPlayer, setLastPlayer] = useState(null);
+  const [nextTurn, setNextTurn] = useState('X');
 
-    this.state = {
-      allCells: Array(9).fill(null),
-      nextPlayerState: true,
-      win: false,
-      mode: this.props.mode,
-      nextTurn: "X",
-      winLine: [],
-      draw: false,
-      lastPlayer: "",
-      restart: this.props.restart
-    };
-  }
-  componentDidUpdate() {
-    const { nextPlayerState, mode, nextTurn, win, restart } = this.state;
-    mode === "single" &&
-      nextPlayerState === false &&
-      nextTurn === "O" &&
-      win === false
-      ? this.AIAmove()
-      : null;
-  }
-  handleRestart = () => {
-    this.setState({
-      allCells: Array(9).fill(null),
-      nextPlayerState: true,
-      win: false,
-      mode: this.props.mode,
-      nextTurn: "X",
-      winLine: [],
-      draw: false,
-      lastPlayer: "",
-      restart: false
-    });
+  const [hasWinner, setWinner] = useState(false);
+  const [winLine, setWinLine] = useState([]);
+
+  const shouldTriggerAIMove =
+    mode === 'single' &&
+    nextPlayerState === false &&
+    nextTurn === 'O' &&
+    !hasWinner;
+
+  const handleRestart = () => {
+    setAllCells(blankField);
+    setNextPlayerState(true);
+    setWinLine([]);
+    setWinner(false);
+    setNextTurn('X');
+    setNextPlayerState(true);
   };
 
-  AIAmove = () => {
-    const { nextPlayerState, allCells, nextTurn, win } = this.state;
-
-    miniMax("AI", allCells, undefined, -Infinity, Infinity);
-    let nextMove = aiNextMove;
+  const nextAIAmove = () => {
+    miniMax('AI', allCells, undefined, -Infinity, Infinity);
+    const nextMove = aiNextMove;
     allCells[nextMove] = nextTurn;
     const checkWin = calculateWinner(allCells);
-    console.log(checkWin);
+
     if (checkWin[0]) {
-      console.log(allCells);
-      this.setState({ win: true, winLine: checkWin[1], lastPlayer: "O" });
+      setWinner(true);
+      setWinLine(checkWin[1]);
+      setLastPlayer('O');
     } else {
-      this.setState({ allCells, nextTurn: "X", nextPlayerState: true });
-      console.log(nextMove);
+      setAllCells(allCells);
+      // TODO: probably not needed
+      setNextTurn('X');
+      setNextPlayerState(true);
     }
   };
-  // click fn and prevent reassign value
-  handleClick(i) {
-    const { allCells, win } = this.state;
-    if (this.state.allCells[i] !== null) {
+
+  const handleClick = i => {
+    /** prev reassign same cell */
+    if (allCells[i]) {
       return null;
     } else {
-      allCells[i] = this.state.nextPlayerState ? "X" : "O";
-      const winLine = calculateWinner(allCells);
-      console.log(allCells);
-      winLine[0] === true
-        ? this.setState({
-            win: true,
-            allCells,
-            lastPlayer: allCells[i],
-            winLine: winLine[1]
-          })
-        : this.setState({
-            allCells,
-            nextPlayerState: !this.state.nextPlayerState,
-            lastPlayer: allCells[i],
-            nextTurn: "O"
-          });
-      if (!this.state.allCells.includes(null) && !this.state.win) {
-        this.setState({ draw: true });
-      }
-    }
-  }
-  drawCell(i) {
-    const { win, winLine, allCells, lastPlayer } = this.state;
-    if (win === false) {
-      return (
-        <GameCell
-          value={allCells[i]}
-          onClick={() => this.handleClick(i)}
-          win={false}
-        />
-      );
-    } else {
-      return (
-        <GameCell
-          value={allCells[i]}
-          onClick={() => null}
-          win={true}
-          winner={lastPlayer}
-          i={i}
-          winline={winLine}
-        />
-      );
-    }
-  }
+      allCells[i] = nextPlayerState ? 'X' : 'O';
+      const newWinLine = calculateWinner(allCells);
 
-  render() {
-    const { nextPlayerState, lastPlayer, win, draw } = this.state;
+      if (newWinLine[0] === true) {
+        setWinner(true);
+
+        setWinLine(newWinLine[1]);
+      } else {
+        setNextPlayerState(!nextPlayerState);
+        // TODO: need alrogithm optimisation
+        setLastPlayer(allCells[i]);
+        setNextTurn('O');
+      }
+      return setAllCells(allCells);
+    }
+  };
+  const drawCell = i => {
     return (
-      <div className="game-board">
-        <div className="board-row">
-          {this.drawCell(0)}
-          {this.drawCell(1)}
-          {this.drawCell(2)}
-        </div>
-        <div className="board-row">
-          {this.drawCell(3)}
-          {this.drawCell(4)}
-          {this.drawCell(5)}
-        </div>
-        <div className="board-row">
-          {this.drawCell(6)}
-          {this.drawCell(7)}
-          {this.drawCell(8)}
-        </div>
-        <DisplayText
-          value={nextPlayerState}
-          win={win}
-          lastPlayer={lastPlayer}
-          draw={draw}
-          handleRestart={this.handleRestart}
-        />
-      </div>
+      <GameCell
+        i={i}
+        value={allCells[i]}
+        onClick={() => handleClick(i)}
+        hasWinner={hasWinner}
+        winner={lastPlayer}
+        winLine={winLine}
+      />
     );
-  }
+  };
+
+  useEffect(() => (shouldTriggerAIMove ? nextAIAmove() : undefined));
+
+  const isDraw = !allCells.includes(null) || hasWinner;
+
+  return (
+    <div className="game-board">
+      <div className="board-row">
+        {drawCell(0)}
+        {drawCell(1)}
+        {drawCell(2)}
+      </div>
+      <div className="board-row">
+        {drawCell(3)}
+        {drawCell(4)}
+        {drawCell(5)}
+      </div>
+      <div className="board-row">
+        {drawCell(6)}
+        {drawCell(7)}
+        {drawCell(8)}
+      </div>
+      <DisplayText
+        value={nextPlayerState}
+        hasWinner={hasWinner}
+        lastPlayer={lastPlayer}
+        isDraw={isDraw}
+        handleRestart={handleRestart}
+      />
+    </div>
+  );
 }
 
 export default Grid;
