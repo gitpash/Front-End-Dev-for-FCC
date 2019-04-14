@@ -1,4 +1,5 @@
 let winLine = [];
+/* eslint-disable import/no-mutable-exports */
 let aiNextMove;
 const letters = { human: 'X', AI: 'O' };
 function alternatePlayer(currentPlayer) {
@@ -99,16 +100,6 @@ function miniMax(player, allCells, depth = 0, alpha, beta) {
   }
   return beta;
 }
-
-// check win or not
-// function scoreBoard(allCells, player) {
-//   let score = 0;
-//   const a = calculateWinner(allCells)[1];
-//   if (a.length === 3) {
-//     allCells[a[0]] === 'X' ? (score += 10) : (score += -10);
-//   }
-//   return score;
-// }
 
 /** test */
 // let board1 = ["X", "O", null, "X", "O", "X", "O", null, null];

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import './app.css';
+import './app.scss';
 import Grid from './components/grid';
 import StartGame from './components/startGame';
 
@@ -11,7 +11,6 @@ function App() {
     <div className="main-grid">
       {gameMode ? (
         <>
-          <Grid mode={gameMode} />
           <button
             className="btn-mainMenu"
             onClick={() => setGameMode(null)}
@@ -19,6 +18,7 @@ function App() {
           >
             Menu
           </button>
+          <Grid mode={gameMode} />
         </>
       ) : (
         <StartGame

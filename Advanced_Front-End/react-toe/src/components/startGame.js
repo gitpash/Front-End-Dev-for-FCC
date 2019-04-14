@@ -1,10 +1,10 @@
 import React from 'react';
-import '../app.css';
+import '../app.scss';
 
 function StartGame({ handleOnePlayer, handleTwoPlayer }) {
   return (
     <div className="start-game">
-      <h2>To start the game choose mode</h2>
+      <p>To start the game choose mode</p>
       <button className="btn-mode" onClick={handleOnePlayer} type="button">
         fight AI
       </button>

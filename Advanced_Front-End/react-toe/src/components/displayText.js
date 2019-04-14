@@ -1,21 +1,27 @@
 import React from 'react';
+import '../app.scss';
 
-// render next player msg and if game win replace it with winner
-const DisplayText = ({ isDraw, hasWinner, handleRestart, value, lastPlayer }) => {
+const DisplayText = ({
+  isDraw,
+  hasWinner,
+  handleRestart,
+  value,
+  lastPlayer,
+}) => {
   const drawInfoMessage = () => {
     if (hasWinner) {
       return (
         <p>
-          Winner is: <span>{lastPlayer}</span>
+          Winner is: <span className="turnInfo">{lastPlayer}</span>
         </p>
       );
     }
     if (isDraw) {
-      return <p>It's Draw!</p>;
+      return <span className="turnInfo">It&apos;s Draw!</span>;
     }
     return (
       <p>
-        Next Turn: <span>{value ? 'X' : 'O'}</span>
+        Next Turn: <span className="turnInfo">{value ? 'X' : 'O'}</span>
       </p>
     );
   };
@@ -24,7 +30,7 @@ const DisplayText = ({ isDraw, hasWinner, handleRestart, value, lastPlayer }) =>
     <div className="log-text">
       {drawInfoMessage()}
       {hasWinner || isDraw ? (
-        <button className="btn-restart" onClick={handleRestart}>
+        <button className="btn-restart" onClick={handleRestart} type="button">
           play again!
         </button>
       ) : null}

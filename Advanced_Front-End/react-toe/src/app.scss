@@ -1,0 +1,133 @@
+body {
+  font: 14px 'Century Gothic', Futura, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#app {
+  display: flex;
+  background-color: #c6e5d9;
+  min-height: 75vh;
+}
+
+.main-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50vh;
+  color: #d68189;
+  font-size: 10px;
+  margin: 10vh;
+}
+
+.game-board {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  min-height: 25vh;
+  margin: 30px;
+  background: #f4ead5;
+
+  font-size: 18px;
+}
+
+.gameCell {
+  background: cornsilk;
+  float: left;
+  font-size: 50px;
+  font-weight: bold;
+  line-height: 34px;
+  width: 90px;
+  height: 90px;
+  margin: 5px;
+  padding: 0;
+  text-align: center;
+  color: gray;
+
+  &:hover {
+    background: pink;
+    cursor: pointer;
+  }
+}
+
+.winLine {
+  color: crimson;
+  font-size: 55px;
+}
+
+.board-row {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+.btn-win {
+  background: grey;
+}
+.btn-mainMenu {
+  width: 90px;
+  margin-bottom: 25px;
+  background: #c6a49a;
+  color: snow;
+  font-size: 15px;
+  border-radius: 5px;
+  overflow: hidden;
+
+  &:hover {
+    background-color: #e94e77;
+    cursor: pointer;
+  }
+}
+.btn-mode {
+  background: #c6a49a;
+  margin: 1em;
+  width: 20vh;
+  border-radius: 5px;
+  color: snow;
+  font-size: 15px;
+  text-align: center;
+
+  &:hover {
+    background-color: #e94e77;
+    cursor: pointer;
+  }
+}
+.btn-restart {
+  margin-left: 10px;
+  font-size: 15px;
+  background: #c6a49a;
+  color: snow;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #e94e77;
+  }
+}
+
+.log-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 20px 'Century Gothic', Futura, sans-serif;
+  color: lightslategrey;
+}
+
+.turnInfo {
+  color: #e94e77;
+}
+
+// @media only screen and (-webkit-min-device-pixel-ratio: 2) and (device-aspect-ratio: 2/3) and (orientation: portrait) {
+//   .gameCell {
+//     width: 70px;
+//     height: 70px;
+//   }
+// }

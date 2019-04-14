@@ -40,45 +40,42 @@ function Grid({ mode }) {
       setLastPlayer('O');
     } else {
       setAllCells(allCells);
-      // TODO: probably not needed
       setNextTurn('X');
       setNextPlayerState(true);
     }
   };
 
   const handleClick = i => {
-    /** prev reassign same cell */
-    if (allCells[i]) {
+    /** prev reassign same cell and after win the game */
+    if (allCells[i] || hasWinner) {
       return null;
-    } else {
-      allCells[i] = nextPlayerState ? 'X' : 'O';
-      const newWinLine = calculateWinner(allCells);
-
-      if (newWinLine[0] === true) {
-        setWinner(true);
-
-        setWinLine(newWinLine[1]);
-      } else {
-        setNextPlayerState(!nextPlayerState);
-        // TODO: need alrogithm optimisation
-        setLastPlayer(allCells[i]);
-        setNextTurn('O');
-      }
-      return setAllCells(allCells);
     }
+
+    allCells[i] = nextPlayerState ? 'X' : 'O';
+    const newWinLine = calculateWinner(allCells);
+
+    if (newWinLine[0] === true) {
+      setWinner(true);
+
+      setWinLine(newWinLine[1]);
+    } else {
+      setNextPlayerState(!nextPlayerState);
+      setNextTurn('O');
+    }
+    setLastPlayer(allCells[i]);
+    return setAllCells(allCells);
   };
-  const drawCell = i => {
-    return (
-      <GameCell
-        i={i}
-        value={allCells[i]}
-        onClick={() => handleClick(i)}
-        hasWinner={hasWinner}
-        winner={lastPlayer}
-        winLine={winLine}
-      />
-    );
-  };
+
+  const drawCell = i => (
+    <GameCell
+      i={i}
+      value={allCells[i]}
+      onClick={() => handleClick(i)}
+      hasWinner={hasWinner}
+      winner={lastPlayer}
+      winLine={winLine}
+    />
+  );
 
   useEffect(() => (shouldTriggerAIMove ? nextAIAmove() : undefined));
 

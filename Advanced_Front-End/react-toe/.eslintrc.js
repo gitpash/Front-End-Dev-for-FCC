@@ -18,8 +18,6 @@ module.exports = {
   },
   plugins: ['react', 'prettier'],
   rules: {
-    /** TODO: bump eslint-plugin-import to 2.17.1 and remove this */
-    'import/no-useless-path-segments': 'off',
     'import/no-unresolved': 0,
     'import/extensions': 0,
     'import/imports-first': 0,
